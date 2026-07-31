@@ -1,0 +1,261 @@
+# Glance — unserver23.net
+#
+# Built from the 23 tunnel records in Cloudflare DNS.
+# Ports in check-url are best guesses from each app's default; fix the ones
+# that are wrong. UNRAID_IP / HA_IP are env vars so you only edit them once.
+#
+# docker run -d --name glance -p 8085:8080 \
+#   -e UNRAID_IP=10.23.23.X -e HA_IP=10.23.23.X \
+#   -e ADGUARD_USER=... -e ADGUARD_PASSWORD=... \
+#   -v /mnt/user/appdata/glance:/app/config \
+#   -v /var/run/docker.sock:/var/run/docker.sock:ro \
+#   glanceapp/glance
+
+server:
+  port: 8080
+  proxied: true
+
+theme:
+  background-color: 225 14 12
+  primary-color: 35 90 55
+  contrast-multiplier: 1.1
+
+branding:
+  logo-text: U
+  app-name: unserver23
+
+define:
+  - &check
+    timeout: 5s
+    allow-insecure: true
+
+pages:
+  - name: Home
+    columns:
+      - size: small
+        widgets:
+          - type: clock
+            hour-format: 12h
+
+          - type: weather
+            units: imperial
+            hour-format: 12h
+            location: Melrose, Massachusetts, United States
+
+          - type: dns-stats
+            service: adguard
+            url: http://10.23.23.100
+            username: ${ADGUARD_USER}
+            password: ${ADGUARD_PASSWORD}
+            hour-format: 12h
+
+          - type: server-stats
+            servers:
+              - type: local
+                name: Glance host
+                hide-mountpoints-by-default: true
+                mountpoints:
+                  "/":
+                    name: Root
+
+      - size: full
+        widgets:
+          - type: search
+            autofocus: true
+            search-engine: duckduckgo
+            bangs:
+              - title: GitHub
+                shortcut: "!gh"
+                url: https://github.com/search?q={QUERY}
+              - title: Requests
+                shortcut: "!r"
+                url: https://requests.unserver23.net/search?query={QUERY}
+
+          - type: monitor
+            title: Media
+            cache: 2m
+            sites:
+              - title: Photos
+                url: https://photos.unserver23.net
+                check-url: http://10.23.23.100:2283/api/server/ping
+                icon: si:immich
+                <<: *check
+              - title: Requests
+                url: https://requests.unserver23.net
+                check-url: http://10.23.23.100:5055/api/v1/status
+                icon: si:overseerr
+                <<: *check
+              - title: Radarr
+                url: https://radarr.unserver23.net
+                check-url: http://10.23.23.100:7878/ping
+                icon: si:radarr
+                <<: *check
+              - title: Sonarr
+                url: https://sonarr.unserver23.net
+                check-url: http://10.23.23.100:8989/ping
+                icon: si:sonarr
+                <<: *check
+              - title: Lidarr
+                url: https://lidarr.unserver23.net
+                check-url: http://10.23.23.100:8686/ping
+                icon: si:lidarr
+                <<: *check
+              - title: Prowlarr
+                url: https://prowlarr.unserver23.net
+                check-url: http://10.23.23.100:9696/ping
+                icon: si:prowlarr
+                <<: *check
+              - title: Transmission
+                url: https://transmission.unserver23.net
+                check-url: http://10.23.23.100:9091/transmission/web/
+                icon: si:transmission
+                alt-status-codes: [401, 409]
+                <<: *check
+              - title: Youtarr
+                url: https://youtarr.unserver23.net
+                check-url: http://10.23.23.100:3087/
+                icon: si:youtube
+                <<: *check
+
+          - type: monitor
+            title: Home
+            cache: 2m
+            sites:
+              - title: Home Assistant
+                url: https://ha.unserver23.net
+                check-url: http://10.23.23.170:8123/manifest.json
+                icon: si:homeassistant
+                <<: *check
+              - title: Control
+                url: https://control.unserver23.net
+                check-url: http://10.23.23.170:8123/manifest.json
+                icon: mdi:tablet-dashboard
+                <<: *check
+              - title: Frame
+                url: https://frame.unserver23.net
+                check-url: http://10.23.23.170:8123/manifest.json
+                icon: mdi:image-frame
+                <<: *check
+              - title: Hyperion
+                url: https://hyperion.unserver23.net
+                check-url: http://10.23.23.100:8092/
+                icon: mdi:television-ambient-light
+                <<: *check
+              - title: BirdNET-Go
+                url: https://birdnet.unserver23.net
+                check-url: http://10.23.23.100:8080/
+                icon: mdi:bird
+                <<: *check
+              - title: Print
+                url: https://print.unserver23.net
+                check-url: http://10.23.23.100:80/
+                icon: mdi:printer-3d-nozzle
+                <<: *check
+
+          - type: monitor
+            title: AI & Files
+            cache: 2m
+            sites:
+              - title: Chat
+                url: https://chat.unserver23.net
+                check-url: http://10.23.23.100:3000/health
+                icon: si:ollama
+                <<: *check
+              - title: Ollama
+                url: https://ollama.unserver23.net
+                check-url: http://10.23.23.100:11434/
+                icon: si:ollama
+                <<: *check
+              - title: Files
+                url: https://files.unserver23.net
+                check-url: http://10.23.23.100:8081/health
+                icon: mdi:folder-network
+                <<: *check
+
+          - type: monitor
+            title: Infra
+            cache: 2m
+            sites:
+              - title: Unraid
+                url: http://10.23.23.100/login
+                icon: si:unraid
+                same-tab: false
+                <<: *check
+              - title: AdGuard Home
+                url: https://adguard.unserver23.net
+                check-url: http://10.23.23.100/
+                icon: si:adguard
+                <<: *check
+              - title: Pi-hole
+                url: https://pihole.unserver23.net
+                check-url: http://10.23.23.100:8080/admin/
+                icon: si:pihole
+                <<: *check
+              - title: DNS
+                url: https://dns.unserver23.net
+                icon: mdi:dns
+                <<: *check
+              - title: Uptime Kuma
+                url: https://uptime.unserver23.net
+                check-url: http://10.23.23.100:3001/
+                icon: si:uptimekuma
+                <<: *check
+              - title: Plex
+                url: http://10.23.23.100:32400/web
+                check-url: http://10.23.23.100:32400/identity
+                icon: si:plex
+                <<: *check
+
+          - type: bookmarks
+            groups:
+              - title: Admin
+                color: 35 90 55
+                links:
+                  - title: Unraid Docker
+                    url: http://10.23.23.100/Docker
+                  - title: Cloudflare Zero Trust
+                    url: https://one.dash.cloudflare.com/
+                  - title: Tailscale
+                    url: https://login.tailscale.com/admin/machines
+                  - title: UniFi
+                    url: https://unifi.ui.com/
+              - title: HA
+                color: 200 60 55
+                links:
+                  - title: Developer Tools
+                    url: https://ha.unserver23.net/developer-tools/state
+                  - title: Logs
+                    url: https://ha.unserver23.net/config/logs
+                  - title: Add-ons
+                    url: https://ha.unserver23.net/hassio/dashboard
+                  - title: ESPHome
+                    url: https://ha.unserver23.net/hassio/ingress/5c53de3b_esphome
+
+      - size: small
+        widgets:
+          - type: releases
+            cache: 6h
+            show-source-icon: true
+            repositories:
+              - glanceapp/glance
+              - home-assistant/core
+              - tphakala/birdnet-go
+              - esphome/esphome
+              - immich-app/immich
+              - louislam/uptime-kuma
+              - AdguardTeam/AdGuardHome
+
+          - type: reddit
+            subreddit: selfhosted
+            show-thumbnails: false
+            limit: 10
+            collapse-after: 5
+
+  - name: Containers
+    columns:
+      - size: full
+        widgets:
+          - type: docker-containers
+            hide-by-default: false
+            format-container-names: true
+            running-only: false
