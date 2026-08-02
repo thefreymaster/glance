@@ -113,7 +113,7 @@ pages:
                 <<: *check
               - title: Youtarr
                 url: https://youtarr.unserver23.net
-                check-url: http://10.23.23.100:3087/
+                check-url: http://10.23.23.100:3012/
                 icon: si:youtube
                 <<: *check
 
