@@ -126,11 +126,6 @@ pages:
                 check-url: http://10.23.23.170:8123/manifest.json
                 icon: si:homeassistant
                 <<: *check
-              - title: Control
-                url: https://control.unserver23.net
-                check-url: http://10.23.23.170:8123/manifest.json
-                icon: mdi:tablet-dashboard
-                <<: *check
               - title: Frame
                 url: https://frame.unserver23.net
                 check-url: http://10.23.23.170:8123/manifest.json
@@ -141,9 +136,9 @@ pages:
                 check-url: http://10.23.23.100:8090/
                 icon: mdi:television-ambient-light
                 <<: *check
-              - title: BirdNET-Go
+              - title: Birdnet
                 url: https://birdnet.unserver23.net
-                check-url: http://10.23.23.100:8080/
+                check-url: http://10.23.23.100:8088/
                 icon: mdi:bird
                 <<: *check
               - title: Print
@@ -151,24 +146,9 @@ pages:
                 check-url: http://10.23.23.100:9023/
                 icon: mdi:printer-3d-nozzle
                 <<: *check
-
-          - type: monitor
-            title: AI & Files
-            cache: 2m
-            sites:
-              - title: Chat
-                url: https://chat.unserver23.net
-                check-url: http://10.23.23.100:3000/health
-                icon: si:ollama
-                <<: *check
-              - title: Ollama
-                url: https://ollama.unserver23.net
-                check-url: http://10.23.23.100:11434/
-                icon: si:ollama
-                <<: *check
               - title: Files
                 url: https://files.unserver23.net
-                check-url: http://10.23.23.100:8081/health
+                check-url: http://10.23.23.100:8125/
                 icon: mdi:folder-network
                 <<: *check
 
@@ -186,18 +166,9 @@ pages:
                 check-url: http://10.23.23.200/
                 icon: si:adguard
                 <<: *check
-              - title: DNS
-                url: https://dns.unserver23.net
-                icon: mdi:dns
-                <<: *check
-              - title: Uptime Kuma
-                url: https://uptime.unserver23.net
-                check-url: http://10.23.23.100:3001/
-                icon: si:uptimekuma
-                <<: *check
               - title: Plex
-                url: http://10.23.23.100:32400/web
-                check-url: http://10.23.23.100:32400/identity
+                url: https://10.23.23.100:32400/web
+                check-url: https://10.23.23.100:32400/identity
                 icon: si:plex
                 <<: *check
 
