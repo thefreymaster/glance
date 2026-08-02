@@ -44,7 +44,7 @@ pages:
 
           - type: dns-stats
             service: adguard
-            url: http://10.23.23.100
+            url: http://10.23.23.200
             username: ${ADGUARD_USER}
             password: ${ADGUARD_PASSWORD}
             hour-format: 12h
@@ -52,7 +52,7 @@ pages:
           - type: server-stats
             servers:
               - type: local
-                name: Glance host
+                name: Unserver
                 hide-mountpoints-by-default: true
                 mountpoints:
                   "/":
@@ -208,7 +208,6 @@ pages:
               - tphakala/birdnet-go
               - esphome/esphome
               - immich-app/immich
-              - louislam/uptime-kuma
               - AdguardTeam/AdGuardHome
 
           - type: reddit
@@ -216,12 +215,3 @@ pages:
             show-thumbnails: false
             limit: 10
             collapse-after: 5
-
-  - name: Containers
-    columns:
-      - size: full
-        widgets:
-          - type: docker-containers
-            hide-by-default: false
-            format-container-names: true
-            running-only: false
