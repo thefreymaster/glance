@@ -83,7 +83,7 @@ pages:
               - title: Requests
                 url: https://requests.unserver23.net
                 check-url: http://10.23.23.100:5055/api/v1/status
-                icon: si:overseerr
+                icon: sh:overseerr
                 <<: *check
               - title: Radarr
                 url: https://radarr.unserver23.net
@@ -98,12 +98,12 @@ pages:
               - title: Lidarr
                 url: https://lidarr.unserver23.net
                 check-url: http://10.23.23.100:8686/ping
-                icon: si:lidarr
+                icon: sh:lidarr
                 <<: *check
               - title: Prowlarr
                 url: https://prowlarr.unserver23.net
                 check-url: http://10.23.23.100:9696/ping
-                icon: si:prowlarr
+                icon: sh:prowlarr
                 <<: *check
               - title: Transmission
                 url: https://transmission.unserver23.net
@@ -138,7 +138,7 @@ pages:
                 <<: *check
               - title: Hyperion
                 url: https://hyperion.unserver23.net
-                check-url: http://10.23.23.100:8092/
+                check-url: http://10.23.23.100:8090/
                 icon: mdi:television-ambient-light
                 <<: *check
               - title: BirdNET-Go
@@ -148,7 +148,7 @@ pages:
                 <<: *check
               - title: Print
                 url: https://print.unserver23.net
-                check-url: http://10.23.23.100:80/
+                check-url: http://10.23.23.100:9023/
                 icon: mdi:printer-3d-nozzle
                 <<: *check
 
@@ -183,13 +183,8 @@ pages:
                 <<: *check
               - title: AdGuard Home
                 url: https://adguard.unserver23.net
-                check-url: http://10.23.23.100/
+                check-url: http://10.23.23.200/
                 icon: si:adguard
-                <<: *check
-              - title: Pi-hole
-                url: https://pihole.unserver23.net
-                check-url: http://10.23.23.100:8080/admin/
-                icon: si:pihole
                 <<: *check
               - title: DNS
                 url: https://dns.unserver23.net
